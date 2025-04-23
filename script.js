@@ -29,9 +29,8 @@ function loadFromStorage() {
   history = JSON.parse(localStorage.getItem('dopamina-history')) || [];
 
   updateBalanceUI();
-
-  rewards.forEach(addRewardToUI);
-  history.forEach(addHistoryToUI);
+  renderRewards();
+  renderHistory();
 }
 
 function depositDopamina() {
@@ -56,13 +55,27 @@ function depositDopamina() {
 
   history.push(entry);
   saveHistory();
-  addHistoryToUI(entry);
+  renderHistory();
 }
 
-function addHistoryToUI(entry) {
+function addHistoryToUI(entry, index) {
   const li = document.createElement('li');
-  li.textContent = `🟢 ${entry.timestamp}: ${entry.activity} (+${entry.value} 💰)`;
+  li.innerHTML = `🟢 ${entry.timestamp}: ${entry.activity} (+${entry.value} 💰)
+    <button onclick="deleteHistory(${index})">🗑️</button>`;
   historyListEl.appendChild(li);
+}
+
+function renderHistory() {
+  historyListEl.innerHTML = '';
+  history.forEach((entry, i) => addHistoryToUI(entry, i));
+}
+
+function deleteHistory(index) {
+  if (confirm("Deseja remover esta atividade do histórico?")) {
+    history.splice(index, 1);
+    saveHistory();
+    renderHistory();
+  }
 }
 
 function addReward() {
@@ -74,30 +87,56 @@ function addReward() {
     return alert('❌ Recompensa e valor válidos são necessários!');
   }
 
-  const reward = { activity, cost };
+  const reward = { activity, cost, redeemed: false };
   rewards.push(reward);
   saveRewards();
-  addRewardToUI(reward);
+  renderRewards();
 }
 
-function addRewardToUI({ activity, cost }) {
+function renderRewards() {
+  rewardListEl.innerHTML = '';
+  rewards.forEach((reward, i) => addRewardToUI(reward, i));
+}
+
+function addRewardToUI(reward, index) {
   const li = document.createElement('li');
-  li.innerHTML = `${activity} - ${cost} 💰 <button onclick="redeemReward(${cost}, this)">Pagar 🤑</button>`;
+
+  const redeemBtn = reward.redeemed
+    ? `<button disabled>Liberado ✅</button>`
+    : `<button onclick="redeemReward(${reward.cost}, ${index}, this)">Pagar 🤑</button>`;
+
+  li.innerHTML = `
+    ${reward.activity} - ${reward.cost} 💰
+    ${redeemBtn}
+    <button onclick="deleteReward(${index})">🗑️</button>
+  `;
+
   rewardListEl.appendChild(li);
 }
 
-function redeemReward(cost, btn) {
+function redeemReward(cost, index, btn) {
   if (balance < cost) {
     errorSound.play();
     return alert('😢 Saldo insuficiente!');
   }
 
   balance -= cost;
+  rewards[index].redeemed = true;
   updateBalanceUI();
+  saveRewards();
   rewardSound.play();
+
   alert('🎁 Atividade liberada! Aproveite!');
   btn.disabled = true;
   btn.innerText = 'Liberado ✅';
+}
+
+function deleteReward(index) {
+  if (confirm("Tem certeza que deseja excluir esta recompensa?")) {
+    rewards.splice(index, 1);
+    saveRewards();
+    renderRewards();
+  }
 }
 
 loadFromStorage();

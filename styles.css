@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+body {
+  background: radial-gradient(circle at top, #0f0f2f, #000);
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  margin: 0;
+  padding: 20px;
+  overflow-x: hidden;
+  perspective: 1000px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 20px #09f;
+  transform-style: preserve-3d;
+}
+
+.glitch {
+  color: #0ff;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #09f, 0 0 20px #0ff;
+  animation: flicker 2s infinite;
+}
+
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    opacity: 0.3;
+  }
+}
+
+.history-section ul li {
+    font-size: 14px;
+    color: #0f0;
+    background-color: #000000a8;
+  }
+  
+
+input, button {
+  font-family: inherit;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+input {
+  width: 40%;
+  background: #111;
+  color: #0f0;
+}
+
+button {
+  background: #09f;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.1);
+  background: #0ff;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  margin: 10px 0;
+  background: #111;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 0 10px #0ff;
+}
+
+.section-3d {
+  transform: rotateX(5deg) rotateY(-5deg);
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title> dopabox 💎 </title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/263/263115.png" />
+
+</head>
+<body>
+  <div class="container neon-box">
+    <h1 class="glitch">🧠 Caixinha Dopaminérgica</h1>
+
+    <section class="bank-section">
+      <h2>🏦 Banco de Dopaminas: <span id="dopamina-balance">0</span> 💰</h2>
+    </section>
+
+    <section class="deposit-section section-3d">
+      <h3>🔄 Registrar Atividade (Ganhar Dopaminas)</h3>
+      <input type="text" id="deposit-activity" placeholder="Ex: Estudar por 30min"/>
+      <input type="number" id="deposit-value" placeholder="Valor em dopaminas"/>
+      <button onclick="depositDopamina()">Depositar ✅</button>
+    </section>
+
+    <section class="reward-section section-3d">
+      <h3>🎁 Recompensas</h3>
+      <section class="history-section section-3d">
+        <h3>📜 Histórico de Depósitos</h3>
+        <ul id="history-list"></ul>
+      </section>
+      
+      <input type="text" id="reward-activity" placeholder="Ex: Assistir série"/>
+      <input type="number" id="reward-cost" placeholder="Custo em dopaminas"/>
+      <button onclick="addReward()">Adicionar ➕</button>
+
+      <ul id="reward-list"></ul>
+    </section>
+  </div>
+
+  <audio id="sound-success" src="sounds/success.mp3"></audio>
+  <audio id="sound-error" src="sounds/error.mp3"></audio>
+  <audio id="sound-reward" src="sounds/reward.mp3"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
